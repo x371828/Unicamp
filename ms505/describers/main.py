@@ -4,6 +4,10 @@ from PIL import Image
 import os
 from collections import Counter
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+script_dir = Path(__file__).resolve().parent
+img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.png"
 
 def calcula_vizinhos(array, lin, col):
 
@@ -28,7 +32,7 @@ def calcula_vizinhos(array, lin, col):
     return int(vizinhos, 2)
 
 #Gera descritor de imagem qualquer
-img = Image.open("Treino/c001_001.png").convert("L")  # "L" = grayscale, for 2D array
+img = Image.open(img_path).convert("L")
 img_array = np.array(img)
 
 descritores = []
@@ -42,7 +46,7 @@ hist = Counter(descritores)
 print(hist)
 
 #Ordena o histograma e transforma em lista
-list = [hist[chave] for chave in sorted(list(hist.keys()))]
+list = np.array([hist[chave] for chave in sorted(list(hist.keys()))])
 
 #Visualiza o histograma
 plt.hist(descritores, bins='auto')
