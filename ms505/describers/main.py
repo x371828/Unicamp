@@ -44,7 +44,6 @@ def gera_descritores(array):
     return descritores
     
 
-#Configura path da imagem, acessa e converte para array preto e branco
 script_dir = Path(__file__).resolve().parent
 img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.png"
 img = Image.open(img_path).convert("L")
