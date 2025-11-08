@@ -50,6 +50,7 @@ img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.p
 img = Image.open(img_path).convert("L")
 img_array = np.array(img)
 
+print("PREIR")
 
 # #Visualiza o histograma
 # plt.hist(descritores, bins='auto')
