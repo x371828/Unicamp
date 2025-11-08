@@ -6,8 +6,6 @@ from collections import Counter
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-script_dir = Path(__file__).resolve().parent
-img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.png"
 
 def calcula_vizinhos(array, lin, col):
 
@@ -31,23 +29,28 @@ def calcula_vizinhos(array, lin, col):
 
     return int(vizinhos, 2)
 
-#Gera descritor de imagem qualquer
+
+def gera_descritores(array):
+    
+    descritores_pre = []
+    
+    for lin in range(128):
+        for col in range(128):
+            descritores_pre.append(calcula_vizinhos(array, lin, col))
+            
+    hist = Counter(descritores_pre)
+    descritores = np.array([hist[chave] for chave in sorted(list(hist.keys()))])
+    
+    return descritores
+    
+
+#Configura path da imagem, acessa e converte para array preto e branco
+script_dir = Path(__file__).resolve().parent
+img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.png"
 img = Image.open(img_path).convert("L")
 img_array = np.array(img)
 
-descritores = []
 
-for lin in range(128):
-    for col in range(128):
-        descritores.append(calcula_vizinhos(img_array, lin, col))
-
-#Cria histograma (dict) da imagem
-hist = Counter(descritores)
-print(hist)
-
-#Ordena o histograma e transforma em lista
-list = np.array([hist[chave] for chave in sorted(list(hist.keys()))])
-
-#Visualiza o histograma
-plt.hist(descritores, bins='auto')
-plt.show()
+# #Visualiza o histograma
+# plt.hist(descritores, bins='auto')
+# plt.show()
