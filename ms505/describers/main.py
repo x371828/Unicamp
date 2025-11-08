@@ -1,5 +1,9 @@
 import math
 import numpy as np
+from PIL import Image
+import os
+from collections import Counter
+import matplotlib.pyplot as plt
 
 def calcula_vizinhos(array, lin, col):
 
@@ -22,3 +26,24 @@ def calcula_vizinhos(array, lin, col):
                 vizinhos += "1"
 
     return int(vizinhos, 2)
+
+#Gera descritor de imagem qualquer
+img = Image.open("Treino/c001_001.png").convert("L")  # "L" = grayscale, for 2D array
+img_array = np.array(img)
+
+descritores = []
+
+for lin in range(128):
+    for col in range(128):
+        descritores.append(calcula_vizinhos(img_array, lin, col))
+
+#Cria histograma (dict) da imagem
+hist = Counter(descritores)
+print(hist)
+
+#Ordena o histograma e transforma em lista
+list = [hist[chave] for chave in sorted(list(hist.keys()))]
+
+#Visualiza o histograma
+plt.hist(descritores, bins='auto')
+plt.show()
