@@ -45,12 +45,14 @@ def gera_descritores(array):
     
 
 script_dir = Path(__file__).resolve().parent
-img_path = script_dir.parent / "data" / "formated_data" / "Treino" / "c001_001.png"
-img = Image.open(img_path).convert("L")
-img_array = np.array(img)
+img_path = script_dir.parent / "data" / "formated_data" / "Treino"
 
-print("PREIR")
+descritores = {}
 
-# #Visualiza o histograma
-# plt.hist(descritores, bins='auto')
-# plt.show()
+for filename in os.listdir(img_path):
+    file_path = os.path.join(img_path, filename)
+    img = Image.open(file_path).convert("L")
+    img_array = np.array(img)
+    
+    histograma = gera_descritores(img_array)
+    descritores[filename] = histograma
