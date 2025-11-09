@@ -38,15 +38,27 @@ def gera_descritores(array):
         for col in range(128):
             descritores_pre.append(calcula_vizinhos(array, lin, col))
             
+    not_showing_up = []
+            
+    for i in range(256):
+        if i not in descritores_pre:
+            not_showing_up.append(i)
+            
     hist = Counter(descritores_pre)
-    descritores = np.array([hist[chave] for chave in sorted(list(hist.keys()))])
     
+    for item in not_showing_up:
+        hist[item] = 0
+    
+    descritores = np.array([hist[chave] for chave in sorted(list(hist.keys()))])
     return descritores
     
-def todos_descritores():
-    
+def todos_descritores(treino_ou_teste):
+
     script_dir = Path(__file__).resolve().parent
-    img_path = script_dir.parent / "data" / "formated_data" / "Treino"
+    if treino_ou_teste == 0:
+        img_path = script_dir.parent / "data" / "formated_data" / "Treino"
+    else:
+        img_path = script_dir.parent / "data" / "formated_data" / "Teste"
 
     descritores = {}
 
