@@ -71,3 +71,14 @@ def todos_descritores(treino_ou_teste):
         descritores[filename] = histograma
 
     return descritores
+
+img_dir = Path(__file__).resolve().parent.parent / "data" / "formated_data" / "Treino"
+img = Image.open(img_dir / "snow.jpg").convert("L")
+img_array = np.array(img)
+
+descritores = gera_descritores(img_array)
+print(descritores)
+
+plt.bar(range(256),descritores)
+plt.show()
+
